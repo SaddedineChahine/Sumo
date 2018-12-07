@@ -11,6 +11,13 @@ namespace Sumo
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
+        Sumo sumo;
+        Sumo2 sumo2;
+        bakgrund bakgrund;
+        Texture2D texture;
+        Vector2 vector;
+        Vector2 speed;
+
 
         public Game1()
         {
@@ -39,6 +46,9 @@ namespace Sumo
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
+            bakgrund = new bakgrund(Content.Load<Texture2D>("isplatta"), Window.ClientBounds.Width/2, Window.ClientBounds.Height/2);
+            sumo = new Sumo(Content.Load<Texture2D>("stone"), 400, 300, 0f, 0f);
+            sumo2 = new Sumo2(Content.Load<Texture2D>("mine"), 400, 400, 10.5f, 8.5f);
 
             // TODO: use this.Content to load your game content here
         }
@@ -61,6 +71,8 @@ namespace Sumo
         {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
+            sumo.Update(Window);
+            sumo2.Update(Window);
 
             // TODO: Add your update logic here
 
@@ -75,6 +87,12 @@ namespace Sumo
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
+            spriteBatch.Begin();
+
+            bakgrund.Draw(spriteBatch);
+            sumo.Draw(spriteBatch);
+            sumo2.Draw(spriteBatch);
+            spriteBatch.End();
             // TODO: Add your drawing code here
 
             base.Draw(gameTime);
